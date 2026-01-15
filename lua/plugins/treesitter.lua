@@ -1,32 +1,27 @@
 return {
-  -- Главный плагин для подсветки синтаксиса
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
-  event = 'BufReadPost',
+  event = { 'BufReadPost', 'BufNewFile' },
   opts = {
     -- Включаем подсветку синтаксиса
     highlight = {
       enable = true,
-      -- Указываем, какие буферы нужно игнорировать
-      disable = {},
+      additional_vim_regex_highlighting = false,
     },
-    -- Устанавливаем языки, которые будут автоматически установлены
+
+    -- Умное выделение текста (индентация)
+    indent = { enable = true },
+
+    -- Список парсеров
     ensure_installed = {
-      'lua',
-      'javascript',
-      'typescript',
-      'html',
-      'css',
-      'json',
-      'yaml',
-      'markdown',
-      'markdown_inline',
-      'vim',
+      -- Frontend & Backend
+      'javascript', 'typescript', 'tsx', 'jsx', 'vue', 'html', 'css', 'scss', 'sql',
+      -- Other
+      'lua', 'vim', 'vimdoc', 'json', 'yaml', 'markdown', 'markdown_inline', 'bash', 'dockerfile', 'gitignore',
+
       'python',
       'c',
       'cpp',
-      'vue',
-      'typescriptreact',
     },
   },
 }
