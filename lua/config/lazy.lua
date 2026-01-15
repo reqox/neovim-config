@@ -32,7 +32,7 @@ require("lazy").setup({
 	},
 	-- Configure any settings here. See the documentation for more details.
 	-- Colorscheme that will be used when installing plugins.
-	-- install = { colorscheme = { "habamax" } },
+	install = { colorscheme = { "vim" } },
 	-- automatically check for plugin updates
 	checker = { enabled = false },
 })
