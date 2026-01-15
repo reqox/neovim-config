@@ -1,16 +1,27 @@
 return {
-	-- ШАГ 1: Плагин Emmet для NeoVim
-	"olrtg/nvim-emmet",
+	-- ШАГ 1: Классический Emmet для Vim (работает как в VSCode)
+	"mattn/emmet-vim",
 
 	-- ШАГ 2: Загружать только для HTML/CSS/JS/JSX файлов
-	ft = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+	ft = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact", "vue" },
 
 	-- ШАГ 3: Настройка
-	config = function()
-		-- По умолчанию работает на Ctrl+Y + ,
-		-- Можно настроить свою клавишу:
-		vim.keymap.set({ "n", "i" }, "<C-e>", require("nvim-emmet").wrap_with_abbreviation, {
-			desc = "Emmet expand",
-		})
+	init = function()
+		-- Включить Emmet только в Insert mode
+		vim.g.user_emmet_mode = "i"
+
+		-- Работает на Ctrl+Y потом запятая (по умолчанию)
+		-- Меняем на просто Ctrl+E
+		-- vim.g.user_emmet_leader_key = '<C-e>'
+
+		-- Настройки для React (className вместо class)
+		vim.g.user_emmet_settings = {
+			javascript = {
+				extends = "jsx",
+			},
+			typescript = {
+				extends = "tsx",
+			},
+		}
 	end,
 }
