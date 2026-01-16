@@ -68,6 +68,9 @@ return {
 			-- 	workingDirectory = { mode = "location" },
 			-- },
 		})
+		vim.lsp.config("graphql", {
+			root_markers = { ".graphqlrc", ".graphqlrc.yml", "package.json" },
+		})
 		vim.lsp.enable({
 			"ts_ls",
 			"lua_ls",
