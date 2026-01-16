@@ -1,73 +1,77 @@
 return {
 	"hrsh7th/nvim-cmp",
-
-	event = "InsertEnter", -- Загружать только в Insert Mode
-
+	event = "InsertEnter",
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp", -- Автодополнение от LSP (функции, переменные)
-		"hrsh7th/cmp-buffer", -- Автодополнение из текста в файле
-		"hrsh7th/cmp-path", -- Автодополнение путей к файлам
-		"L3MON4D3/LuaSnip", -- Движок для сниппетов
-		"saadparwaiz1/cmp_luasnip", -- Интеграция LuaSnip с nvim-cmp
+		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-path",
+		{
+			"L3MON4D3/LuaSnip",
+			version = "v2.*",
+			build = "make install_jsregexp",
+		},
+		"saadparwaiz1/cmp_luasnip",
+		"rafamadriz/friendly-snippets", -- 🔥 Тонна готовых сниппетов
+		"onsails/lspkind.nvim", -- VS Code иконки
 	},
-
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
+		local lspkind = require("lspkind")
+
+		-- Загрузка готовых сниппетов из friendly-snippets
+		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup({
+			view = {
+				docs = {
+					auto_open = false, -- Документация не будет открываться автоматически
+				},
+			},
 			snippet = {
 				expand = function(args)
-					luasnip.lsp_expand(args.body) -- Используем LuaSnip
+					luasnip.lsp_expand(args.body)
 				end,
 			},
-
-			-- ШАГ 6: Горячие клавиши для автодополнения
 			mapping = cmp.mapping.preset.insert({
-				-- Tab = выбрать элемент автодополнения
+				-- Tab = подтвердить (твой вариант — удобнее!)
 				["<Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
-						cmp.confirm({ select = true }) -- Подтвердить выбор
+						cmp.confirm({ select = true })
 					elseif luasnip.expand_or_jumpable() then
-						luasnip.expand_or_jump() -- Прыгнуть в сниппете
+						luasnip.expand_or_jump()
 					else
-						fallback() -- Обычный Tab
+						fallback()
 					end
 				end, { "i", "s" }),
 
-				-- Ctrl+n / Ctrl+p = навигация по списку
-				["<C-n>"] = cmp.mapping.select_next_item(),
-				["<C-p>"] = cmp.mapping.select_prev_item(),
+				-- Навигация (можно оставить твой Ctrl+n/p или заменить на Ctrl+j/k)
+				["<C-j>"] = cmp.mapping.select_next_item(),
+				["<C-k>"] = cmp.mapping.select_prev_item(),
 
-				-- Ctrl+Space = открыть автодополнение вручную
+				-- Скролл документации (новое!)
+				["<C-b>"] = cmp.mapping.scroll_docs(-4),
+				["<C-f>"] = cmp.mapping.scroll_docs(4),
+
 				["<C-Space>"] = cmp.mapping.complete(),
-
-				-- Esc = закрыть автодополнение
-				["<C-e>"] = cmp.mapping.abort(),
+				["<C-a>"] = cmp.mapping.abort(),
 			}),
-
 			sources = cmp.config.sources({
-				{ name = "nvim_lsp" }, -- 1. LSP (функции, импорты, переменные)
-				{ name = "luasnip" }, -- 2. Сниппеты
-				{ name = "buffer" }, -- 3. Текст из открытого файла
-				{ name = "path" }, -- 4. Пути к файлам
+				{ name = "nvim_lsp" },
+				{ name = "luasnip" },
+				{ name = "buffer" },
+				{ name = "path" },
 			}),
-
 			window = {
-				completion = cmp.config.window.bordered(), -- Рамка вокруг списка
-				documentation = cmp.config.window.bordered(), -- Рамка вокруг документации
+				completion = cmp.config.window.bordered(),
+				documentation = cmp.config.window.bordered(),
 			},
-
 			formatting = {
-				format = function(entry, item)
-					item.menu = ({
-						nvim_lsp = "[LSP]",
-						luasnip = "[Snippet]",
-						buffer = "[Buffer]",
-						path = "[Path]",
-					})[entry.source.name]
-					return item
-				end,
+				format = lspkind.cmp_format({
+					mode = "symbol_text", -- Иконка + текст
+					maxwidth = 50,
+					ellipsis_char = "...",
+				}),
 			},
 		})
 	end,
