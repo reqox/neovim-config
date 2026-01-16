@@ -12,8 +12,10 @@
 git clone https://github.com/reqox/neovim-config.git
 [ -d ~/.config/nvim ] && mv ~/.config/nvim ~/.config/nvim.backup.$(date +%Y%m%d_%H%M%S)
 mv ./neovim-config ~/.config/nvim
+echo "rm -rfv ~/.local/state/nvim && rm -rfv ~/.local/share/nvim && rm -rfv ~/.cache/nvim" > ~/.config/nvim/nvim--clear
+chmod a+x ~/.config/nvim/nvim--clear
 ~/.config/nvim/nvim--clear  # Clear cache (optional, for clean install)
-nvim
+echo "NeoVim setup has been installed successfully. Start NeoVim with 'nvim'"
 ```
 
 ## Clear cache manually (if needed)
