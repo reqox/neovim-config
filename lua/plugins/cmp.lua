@@ -3,8 +3,7 @@ return {
   
   event = 'InsertEnter', -- Загружать только в Insert Mode
   
-  dependencies = {
-    'hrsh7th/cmp-nvim-lsp',  -- Автодополнение от LSP (функции, переменные)
+  dependencies = {     'hrsh7th/cmp-nvim-lsp',  -- Автодополнение от LSP (функции, переменные)
     'hrsh7th/cmp-buffer',    -- Автодополнение из текста в файле
     'hrsh7th/cmp-path',      -- Автодополнение путей к файлам
     'L3MON4D3/LuaSnip',      -- Движок для сниппетов
