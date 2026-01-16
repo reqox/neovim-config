@@ -3,8 +3,8 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-		{ "williamboman/mason.nvim", version = "v1.10.0" },
-		{ "williamboman/mason-lspconfig.nvim", version = "v1.31.0" },
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
 	},
 
 	config = function()
