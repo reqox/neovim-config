@@ -3,21 +3,15 @@ return {
 	build = ":TSUpdate",
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
-		-- Включаем подсветку синтаксиса
 		highlight = {
 			enable = true,
 			additional_vim_regex_highlighting = false,
 		},
-
-		-- Умное выделение текста (индентация)
 		indent = { enable = true },
-
-		-- Список парсеров
 		ensure_installed = {
 			-- Frontend & Backend
 			"javascript",
-			"typescript",
-			"tsx",
+			"typescript", "tsx",
 			"jsx",
 			"vue",
 			"html",
