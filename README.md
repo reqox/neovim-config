@@ -18,8 +18,10 @@ chmod a+x ~/.config/nvim/nvim--clear
 echo "NeoVim setup has been installed successfully. Start NeoVim with 'nvim'"
 ```
 
-## Clear cache manually (if needed)
+### Clear cache manually (if needed)
 
 ```bash
 ~/.config/nvim/nvim--clear
 ```
+## NeoVim install
+1. https://github.com/neovim/neovim/releases
