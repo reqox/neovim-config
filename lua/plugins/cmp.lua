@@ -63,8 +63,12 @@ return {
 				{ name = "path" },
 			}),
 			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered({
+					max_height = 10,
+				}),
+				documentation = cmp.config.window.bordered({
+					max_height = 10,
+				}),
 			},
 			formatting = {
 				format = lspkind.cmp_format({
