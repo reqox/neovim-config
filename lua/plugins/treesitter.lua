@@ -11,7 +11,8 @@ return {
 		ensure_installed = {
 			-- Frontend & Backend
 			"javascript",
-			"typescript", "tsx",
+			"typescript",
+			"tsx",
 			"jsx",
 			"vue",
 			"html",

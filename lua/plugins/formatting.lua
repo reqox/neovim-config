@@ -28,22 +28,22 @@ return {
 				javascriptreact = { "prettier" },
 				typescriptreact = { "prettier" },
 				css = { "prettier" },
-        svelte = { "prettier" },
+				svelte = { "prettier" },
 				scss = { "prettier" },
 				html = { "prettier" },
 				json = { "prettier" },
 				markdown = { "prettier" },
-        yaml = { "prettier" },
-        graphql = { "prettier" },
-        liquid = { "prettier" },
-        python = { "isort", "black" },
+				yaml = { "prettier" },
+				graphql = { "prettier" },
+				liquid = { "prettier" },
+				python = { "isort", "black" },
 				lua = { "stylua" },
 				sql = { "sql_formatter" },
 			},
 			format_on_save = {
 				timeout_ms = 3000,
 				lsp_fallback = true, -- Если prettier не найден, использовать LSP
-        async = false,
+				async = false,
 			},
 		})
 
