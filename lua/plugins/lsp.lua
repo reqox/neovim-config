@@ -14,7 +14,6 @@ return {
 			automatic_installation = true,
 		})
 
-		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -46,24 +45,29 @@ return {
 			vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 		end
 
-		local ts_servers = { "ts_ls", "emmet_ls" }
-		for _, server in ipairs(ts_servers) do
-			lspconfig[server].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				root_dir = find_root_dir,
-			})
-		end
+		-- Настройка для ts_ls и emmet_ls
+		vim.lsp.config("ts_ls", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+			root_dir = find_root_dir,
+		})
 
+		vim.lsp.config("emmet_ls", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+			root_dir = find_root_dir,
+		})
+
+		-- Настройка для остальных серверов
 		local other_servers = { "html", "cssls", "jsonls", "sqlls" }
 		for _, server in ipairs(other_servers) do
-			lspconfig[server].setup({
+			vim.lsp.config(server, {
 				capabilities = capabilities,
 				on_attach = on_attach,
 			})
 		end
 
-		lspconfig.lua_ls.setup({
+		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {
@@ -77,6 +81,51 @@ return {
 					telemetry = { enable = false },
 				},
 			},
+		})
+
+		-- Автозапуск серверов при открытии файлов
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+			callback = function()
+				vim.lsp.enable("ts_ls")
+				vim.lsp.enable("emmet_ls")
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "html" },
+			callback = function()
+				vim.lsp.enable("html")
+				vim.lsp.enable("emmet_ls")
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "css", "scss" },
+			callback = function()
+				vim.lsp.enable("cssls")
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "json" },
+			callback = function()
+				vim.lsp.enable("jsonls")
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "sql" },
+			callback = function()
+				vim.lsp.enable("sqlls")
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "lua" },
+			callback = function()
+				vim.lsp.enable("lua_ls")
+			end,
 		})
 	end,
 }
