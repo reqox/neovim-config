@@ -6,7 +6,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-    { "folke/lazydev.nvim", opts = {} },
+		{ "folke/lazydev.nvim", opts = {} },
 	},
 
 	config = function()
@@ -53,11 +53,20 @@ return {
 			},
 		})
 		vim.lsp.config("ts_ls", {
-			root_markers = { "package.json", "tsconfig.json", ".git" },
+			root_markers = { "package.json", "tsconfig.json" },
 		})
 		vim.lsp.config("emmet_ls", {
-			root_markers = { "package.json", ".git" },
+			root_markers = { "package.json" },
 			filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact" },
+		})
+		vim.lsp.config("eslint", {
+			root_markers = { ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "package.json" },
+			-- settings = {
+			-- 	experimental = {
+			-- 		useFlatConfig = true,
+			-- 	},
+			-- 	workingDirectory = { mode = "location" },
+			-- },
 		})
 		vim.lsp.enable({
 			"ts_ls",
