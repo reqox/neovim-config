@@ -19,12 +19,21 @@ return {
 					enable = true,
 				},
 				icons = {
+					git_placement = "signcolumn",
 					glyphs = {
 						folder = {
 							-- arrow_closed = "", -- arrow when folder is closed
 							arrow_closed = "c", -- arrow when folder is closed
 							-- arrow_open = "", -- arrow when folder is open
 							arrow_open = "o", -- arrow when folder is open
+						},
+						git = {
+							unstaged = "M",
+							staged = "S",
+							renamed = "R",
+							untracked = "U",
+							deleted = "D",
+							ignored = "I",
 						},
 					},
 				},
@@ -59,5 +68,15 @@ return {
 		) -- toggle file explorer on current file
 		keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
 		keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
+
+		vim.api.nvim_create_user_command("Ex", function()
+			local view = require("nvim-tree.view")
+
+			if view.is_visible() then
+				vim.cmd("NvimTreeFocus")
+			else
+				vim.cmd("NvimTreeOpen")
+			end
+		end, {})
 	end,
 }
