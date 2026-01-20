@@ -17,3 +17,5 @@ vim.opt.termguicolors = true
 vim.opt.mouse = ""
 
 vim.opt.showmode = false
+
+vim.opt.smartcase = true
