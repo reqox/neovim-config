@@ -4,11 +4,20 @@ return {
 	config = function()
 		local nvimtree = require("nvim-tree")
 
+		local function on_attach(bufnr)
+			local api = require("nvim-tree.api")
+			api.config.mappings.default_on_attach(bufnr)
+			vim.keymap.set("n", "<CR>", function()
+				print('o, ПОПАЛСЯ! Нажми "o"')
+			end, { buffer = bufnr })
+		end
+
 		-- recommended settings from nvim-tree documentation
 		vim.g.loaded_netrw = 1
 		vim.g.loaded_netrwPlugin = 1
 
 		nvimtree.setup({
+			on_attach = on_attach,
 			view = {
 				width = 50,
 				relativenumber = true,
